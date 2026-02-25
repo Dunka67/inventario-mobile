@@ -9,6 +9,9 @@ st.set_page_config(page_title="Inventário Mobile", page_icon="📱")
 if 'Deletar_Lancamento' not in st.session_state:
     st.session_state['Deletar_Lancamento'] = False
 
+if 'reset_total' not in st.session_state:
+    st.session_state['reset_total'] = False
+
 if 'confirmar_limpeza' not in st.session_state:
     st.session_state['confirmar_limpeza'] = False
 
@@ -28,8 +31,13 @@ if 'mensagem_sucesso' in st.session_state:
     st.success(st.session_state['mensagem_sucesso'])
     del st.session_state['mensagem_sucesso']
 
+if st.session_state['reset_total']:
+    st.session_state['conferente'] = ""
+    st.session_state['reset_total'] = False
 
 st.title('Inventário Rápido')
+
+
 
 st.selectbox('Turno', options=['Noite', 'Tarde', 'Manhã'], key='turno')
 st.text_input('Nome Conferente', key='conferente')
@@ -95,6 +103,7 @@ def limpar_tudo():
     st.session_state['limpar_campo'] = False
     st.session_state['Deletar_Lancamento'] = False
     st.session_state['mensagem_sucesso'] = "Inventário limpo com sucesso!"
+    st.session_state['reset_total'] = True
 
 
 def deletar_lancamento(categoria, produto):
@@ -114,6 +123,7 @@ if st.session_state['inventario']:
 
     if st. button('Deletar Lançamento'):
         st.session_state['Deletar_Lancamento'] = True
+        st.session_state['confirmar_limpeza'] = False
         st.rerun()
     if st.session_state['Deletar_Lancamento']:
         st.warning('Tem certeza que deseja deletar este lançamento? Esta ação não pode ser desfeita.')
@@ -133,6 +143,7 @@ if st.session_state['inventario']:
 
     if st.button('Limpar Inventário'):
         st.session_state['confirmar_limpeza'] = True
+        st.session_state['Deletar_Lancamento'] = False
         st.rerun()
 
     if st.session_state['confirmar_limpeza']:
