@@ -92,7 +92,6 @@ st.code(texto_relatorio, language='markdown')
 # 1. Crie a função que zera as variáveis na memória
 def limpar_tudo():
     st.session_state['inventario'] = {}
-    st.session_state['conferente'] = ""
     st.session_state['limpar_campo'] = False
     st.session_state['Deletar_Lancamento'] = False
     st.session_state['mensagem_sucesso'] = "Inventário limpo com sucesso!"
